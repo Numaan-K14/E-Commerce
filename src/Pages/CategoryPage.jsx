@@ -35,7 +35,7 @@ export function Category() {
     setPopup(product);
     setItemDetails(true);
   };
-  if (popup) console.log(popup, "<<<<<<Popup>>>>");
+  // if (popup) console.log(popup, "<<<<<<Popup>>>>");
 
   // --api call for every submenu list---
   const { data, isLoading } = useQuery({
@@ -57,7 +57,7 @@ export function Category() {
       <CategoryNavbar
         handleCategoryClick={handleCategoryClick}
         ApiCallHandle={ApiCallHandle}
-        showImage={false}
+        showImage={true}
       />
       {data?.products.length > 0 ? (
         <div className="grid grid-cols-5 gap-6 ">

@@ -1,15 +1,14 @@
 import React from 'react'
 
-export 
-    function OrderBill({ BuyData , qty  }) {
-    const todayDate = new Date().toISOString().slice(0, 10);
-      const discount = Math.round(
-        BuyData?.price * (BuyData?.discountPercentage / 100)
-      );
+export function OrderBill({
+  BuyData,
 
-      const totalPrice = BuyData?.price * qty;
-      const totalDiscount = discount * qty;
-      const finalAmount = totalPrice - totalDiscount;
+  totalPrice,
+  totalDiscount,
+  finalAmount,
+}) {
+  const todayDate = new Date().toISOString().slice(0, 10);
+  const BuyData_Local = JSON.parse(localStorage.getItem("BuyData")) || [];
   return (
     <>
       <div className="col-span-4">
@@ -22,7 +21,7 @@ export
           {/* ================= PRICE CONTENT ================= */}
           <div className="px-5 py-4 text-sm space-y-3">
             <div className="flex justify-between">
-              <span>Price ({qty} item)</span>
+              <span>Price ({BuyData_Local.length} item)</span>
               <span>₹{Math.round(totalPrice)}</span>
             </div>
 
@@ -47,7 +46,7 @@ export
           </div>
 
           {/* ================= ORDER INFO / BARCODE ================= */}
-          <div className="border-t border-gray-300 px-5 py-4">
+          <div className="border-t border-gray-300 p-4">
             <div className="text-sm font-semibold text-gray-900 mb-4">
               ORDER INFORMATION
             </div>
@@ -57,8 +56,8 @@ export
                 {/* Barcode no */}
                 <div>
                   <p className="text-xs text-gray-500">Order Barcode</p>
-                  <p className="font-mono text-base tracking-widest text-gray-900">
-                    {BuyData?.meta?.barcode}
+                  <p className="font-mono text-base tracking-widest text-gray-900 leading-11">
+                    {BuyData[0]?.meta?.barcode}
                   </p>
                 </div>
                 {/* dates */}
@@ -71,7 +70,7 @@ export
                   <div>
                     <p className="text-xs text-gray-500">Last Updated</p>
                     <p className="text-gray-800">
-                      {BuyData?.meta?.updatedAt?.split("T")[0]}
+                      {BuyData[0]?.meta?.updatedAt?.split("T")[0]}
                     </p>
                   </div>
                 </div>
@@ -81,7 +80,7 @@ export
               <div className="flex justify-end">
                 <div className="border border-dashed border-gray-300 p-3 rounded-md bg-gray-50">
                   <img
-                    src={BuyData?.meta?.qrCode}
+                    src={BuyData[0]?.meta?.qrCode}
                     alt="Order QR Code"
                     className="w-24 h-24 object-contain"
                   />

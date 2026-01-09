@@ -11,7 +11,7 @@ import {
   PhoneCall,
   MapPinCheck,
   Clock,
-  EllipsisVertical,
+  LogOut,
 } from "lucide-react";
 import { GrCart } from "react-icons/gr";
 import { RiCustomerService2Fill } from "react-icons/ri";
@@ -20,7 +20,7 @@ import { LoginPage } from "@/Pages/LoginPage";
 import { BiLogIn } from "react-icons/bi";
 import { SideDrawer } from "@/components/custom/SideDrawer";
 import { useForm } from "react-hook-form";
-import { DropdownMenuDemo } from "@/components/custom/CategoryNav/Dropdown";
+// import { DropdownMenuDemo } from "@/components/custom/CategoryNav/Dropdown";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -28,6 +28,7 @@ export function Header() {
   const navigate = useNavigate();
   const User = JSON.parse(localStorage.getItem("UserData"));
   const UserDetails = JSON.parse(localStorage.getItem("UserDetails"));
+  const MyCart = JSON.parse(localStorage.getItem("MyCart") || "[]");
   // console.log(UserDetails, ">>>>UserDetails>>>>>>");
   const iconWrapper =
     "flex items-center gap-2 text-white font-bold text-xl cursor-pointer hover:text-yellow-300 transition";
@@ -103,9 +104,15 @@ export function Header() {
             {User && (
               <>
                 <NavLink to="/Add-to-cart">
-                  <div className={iconWrapper}>
+                  <div
+                    className={`relative flex items-center gap-1 ${iconWrapper}`}
+                  >
                     <GrCart size={20} />
                     <span>Cart</span>
+
+                    <span className="absolute -top-3 -right-4 bg-[#ff0c0ce1] text-white rounded-full min-w-4.5 h-4.5 py-3 px-2 flex items-center justify-center text-lg font-bold ">
+                      {MyCart.length}
+                    </span>
                   </div>
                 </NavLink>
 
@@ -115,6 +122,17 @@ export function Header() {
                     <span>Support</span>
                   </div>
                 </NavLink>
+                <div
+                  onClick={() => {
+                    alert("Are you sure you want to logout?");
+                    localStorage.removeItem("UserData");
+                    localStorage.removeItem("UserDetails");
+                    navigate(0);
+                  }}
+                  className={iconWrapper}
+                >
+                  <LogOut />
+                </div>
               </>
             )}
           </div>

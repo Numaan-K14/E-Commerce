@@ -7,7 +7,7 @@ import { RiLoader4Line } from "react-icons/ri";
 import { DealsSection } from "@/components/custom/Deals/DealsSection";
 // import { ProductClickPop } from "@/components/custom/ProductClickPop";
 import { images } from "@/Data/staticData";
-import { DropdownMenuDemo } from "@/components/custom/CategoryNav/Dropdown";
+
 
 
 export function Home() {
@@ -48,7 +48,6 @@ export function Home() {
       />
       <CarausolImg images={images} />
       <DealsSection data={data} />
-     <DropdownMenuDemo/>
     </div>
   );
 }

@@ -8,11 +8,26 @@ import {
   Truck,
 } from "lucide-react";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-export function OrderInfo({ BuyData, discount, qty, setQty, footer, CartBtn }) {
+export function OrderInfo({
+  BuyData,
+  discount,
+  qty,
+  setQty,
+  footer,
+  CartBtn,
+  CartProductRemove,
+  CartProductPush,
+}) {
+  const location = useLocation();
+  const Cart = location.pathname === "/Add-to-cart";
   return (
     <>
-      <section className="flex gap-2 border-b border-gray-200 p-6">
+      <section
+        // onClick={() => CartProduct(BuyData)}
+        className="flex gap-2 border-b border-gray-200 p-6"
+      >
         <img
           src={BuyData?.thumbnail}
           alt={BuyData?.title}
@@ -35,11 +50,16 @@ export function OrderInfo({ BuyData, discount, qty, setQty, footer, CartBtn }) {
 
           <div className="flex items-center gap-3 mt-1">
             <span className="text-lg font-semibold text-gray-900">
-              ₹{Math.round(BuyData?.price - discount)}
+              {Cart
+                ? `₹${Math.round(BuyData?.price)}`
+                : `${Math.round(BuyData?.price - discount)}`}
             </span>
-            <span className="text-sm line-through text-gray-400">
-              ₹{Math.round(BuyData?.price)}
-            </span>
+            {!Cart && (
+              <span className="text-sm line-through text-gray-400">
+                ₹{Math.round(BuyData?.price)}
+              </span>
+            )}
+
             <span className="text-sm font-medium text-green-700">
               {Math.round(BuyData?.discountPercentage)}% off
             </span>
@@ -74,7 +94,7 @@ export function OrderInfo({ BuyData, discount, qty, setQty, footer, CartBtn }) {
                     className="w-12 text-center text-sm outline-none border-x border-gray-300"
                     onChange={(e) => {
                       const value = Number(e.target.value);
-                      if (value >= 1 && value <= BuyData.stock) {
+                      if (value >= 0 && value <= BuyData.stock) {
                         setQty(value);
                       }
                     }}
@@ -95,19 +115,25 @@ export function OrderInfo({ BuyData, discount, qty, setQty, footer, CartBtn }) {
           )}
         </div>
         {/* --footer act btn-- */}
-        {CartBtn && (
-          <div className="flex flex-col justify-between items-end ">
-            <button className="flex items-center gap-2 text-sm font-medium text-red-600 hover:underline">
-              <Trash2 size={16} />
-              Remove
-            </button>
 
-            <button className="flex items-center gap-2 border border-gray-300 text-gray-500 text-sm font-semibold px-5 py-2 rounded cursor-pointer hover:bg-gray-100 transition-all duration-600" >
+        <div className="flex flex-col justify-between items-end ">
+          <button
+            onClick={() => CartProductRemove(BuyData)}
+            className="flex items-center gap-2 border border-red-300 text-red-500 text-sm font-semibold px-5 py-2 rounded cursor-pointer hover:bg-red-100 transition-all duration-600"
+          >
+            <Trash2 size={16} />
+            Remove
+          </button>
+          {CartBtn && (
+            <button
+              onClick={() => CartProductPush(BuyData)}
+              className="flex items-center gap-2 border border-gray-300 text-gray-500 text-sm font-semibold px-5 py-2 rounded cursor-pointer hover:bg-gray-100 transition-all duration-600"
+            >
               <ShoppingBag size={16} />
               Place Order
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </section>
 
       {/* --footer-- */}

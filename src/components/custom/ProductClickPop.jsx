@@ -16,7 +16,7 @@ export function ProductClickPop({ product, open, setOpen }) {
   const [comment, setComment] = useState(false);
   const navigate = useNavigate();
   // const User = JSON.parse(localStorage.getItem("UserData"));
-  const UserDetails = JSON.parse(localStorage.getItem("UserDetails"));
+  const UserData = JSON.parse(localStorage.getItem("UserData") || "null");
   if (!product) return null;
   const {
     title,
@@ -38,24 +38,35 @@ export function ProductClickPop({ product, open, setOpen }) {
   } = product;
 
   function BuyHandle() {
-    navigate("/Buy-now", { state: product });
+    if (!UserData) {
+      setOpen(false);
+      alert("Please login to proceed with buying.");
+    } else {
+      const existingCart = JSON.parse(localStorage.getItem("BuyData")) || [];
+      existingCart.push(product);
+      localStorage.setItem("BuyData", JSON.stringify(existingCart));
+      setOpen(false);
+      navigate("/Buy-now");
+    }
   }
   function AddToCart() {
+    if (!UserData) {
+      setOpen(false);
+      alert("Please login to add items to cart.");
+    } else {
+      const existingCart = JSON.parse(localStorage.getItem("MyCart")) || [];
+      existingCart.push(product);
+      localStorage.setItem("MyCart", JSON.stringify(existingCart));
+      setOpen(false);
 
-    const existingCart = JSON.parse(localStorage.getItem("MyCart")) || [];
-    existingCart.push(product);
-    localStorage.setItem("MyCart", JSON.stringify(existingCart));
-    setOpen(false);
-    // navigate("/Add-to-cart",{state:product});
-    setTimeout(() => {
-      alert("Product added to cart Successfully!");
-    }, 1000);
+      // alert("Added Sucessfully !!!!");
+    }
+    navigate(0);
   }
-
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen} className="">
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-7xl h-[85vh]  bg-white p-0 shadow-2xl">
           {/* ================= HEADER ================= */}
           <DialogHeader className="border-b p-4">
@@ -165,7 +176,10 @@ export function ProductClickPop({ product, open, setOpen }) {
 
               {/* ACTION BUTTONS */}
               <div className="flex gap-4 pt-4">
-                <Button onClick={AddToCart} className="flex-1 bg-yellow-400 text-black transition-all duration-700  hover:bg-white hover:text-yellow-400 hover:border hover:border-yellow-400">
+                <Button
+                  onClick={AddToCart}
+                  className="flex-1 bg-yellow-400 text-black transition-all duration-700  hover:bg-white hover:text-yellow-400 hover:border hover:border-yellow-400"
+                >
                   Add to Cart
                 </Button>
                 <Button

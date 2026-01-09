@@ -31,9 +31,9 @@ export function CategoryNavbar({
               <HoverCardContent
                 side="bottom"
                 align="start"
-                className="z-50 min-w-55 bg-white shadow-lg rounded p-3"
+                className="z-50 max-w-55 bg-white shadow-lg rounded p-3"
               >
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md uppercase ">
                   {Array.isArray(menu)
                     ? menu.map((sub) => (
                         <li
