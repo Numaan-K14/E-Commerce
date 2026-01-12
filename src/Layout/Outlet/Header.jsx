@@ -116,7 +116,7 @@ export function Header() {
                   </div>
                 </NavLink>
 
-                <NavLink to="">
+                <NavLink to="/Support">
                   <div className={iconWrapper}>
                     <RiCustomerService2Fill size={22} />
                     <span>Support</span>
@@ -126,7 +126,6 @@ export function Header() {
                   onClick={() => {
                     alert("Are you sure you want to logout?");
                     localStorage.removeItem("UserData");
-                    localStorage.removeItem("UserDetails");
                     navigate(0);
                   }}
                   className={iconWrapper}

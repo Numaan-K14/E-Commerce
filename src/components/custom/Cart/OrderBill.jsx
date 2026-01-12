@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SideDrawer } from "../SideDrawer";
+import { useForm } from "react-hook-form";
+import { UserPen } from "lucide-react";
 
 export function OrderBill({
   BuyData,
@@ -9,6 +13,36 @@ export function OrderBill({
 }) {
   const todayDate = new Date().toISOString().slice(0, 10);
   const BuyData_Local = JSON.parse(localStorage.getItem("BuyData")) || [];
+  const UserDetails = JSON.parse(localStorage.getItem("UserDetails"));
+  const [PlaceOrder, setPlaceOrder] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("UserData", data);
+    localStorage.setItem("UserDetails", JSON.stringify(data));
+    reset();
+    setPlaceOrder(false);
+    {
+      location.pathname == "/Buy-now" && navigate(0);
+    }
+  };
+
+  function PlaceOrderHandle() {
+    if (UserDetails) {
+      navigate("/");
+      console.log("you presssed PlaceOrderHandle<<True>>");
+    } else {
+      setPlaceOrder(true);
+      console.log("you presssed PlaceOrderHandle<<false>>");
+    }
+  }
   return (
     <>
       <div className="col-span-4">
@@ -92,6 +126,7 @@ export function OrderBill({
           {/* ================= PLACE ORDER BUTTON ================= */}
           <div className="p-4">
             <button
+              onClick={PlaceOrderHandle}
               disabled={BuyData?.stock === 0}
               className="w-full bg-[#fb641b] hover:bg-[#e95a17] text-white py-3 font-semibold tracking-wide cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
             >
@@ -100,6 +135,136 @@ export function OrderBill({
           </div>
         </div>
       </div>
+      <SideDrawer
+        open={PlaceOrder}
+        OpenHandle={setPlaceOrder}
+        HandleSubmit={handleSubmit(onSubmit)}
+        reset={reset}
+        Action={UserDetails ? "Logout" : "Save"}
+        Heading={
+          <div className="flex items-center gap-2">
+            <UserPen />
+            <span>Create Your Profile</span>
+          </div>
+        }
+        Description={"Control your personal details and delivery preferences"}
+      >
+        <form className="grid grid-rows-6 gap-6 p-4">
+          {/* ===================== NAME ===================== */}
+          <input
+            type="text"
+            placeholder="Full Name (for delivery)"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("fullName", {
+              required: "Full name is required",
+            })}
+          />
+          {errors.fullName && (
+            <span className="text-sm text-red-600">
+              {errors.fullName.message}
+            </span>
+          )}
+
+          {/* ===================== CONTACT ===================== */}
+          <input
+            type="tel"
+            placeholder="Mobile Number"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("mobile", {
+              required: "Mobile number is required",
+            })}
+          />
+          {errors.mobile && (
+            <span className="text-sm text-red-600">
+              {errors.mobile.message}
+            </span>
+          )}
+
+          {/* ===================== ADDRESS ===================== */}
+          <input
+            type="text"
+            placeholder="Pincode"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("pincode", {
+              required: "Pincode is required",
+            })}
+          />
+          {errors.pincode && (
+            <span className="text-sm text-red-600">
+              {errors.pincode.message}
+            </span>
+          )}
+
+          <input
+            type="text"
+            placeholder="State"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("state", {
+              required: "State is required",
+            })}
+          />
+          {errors.state && (
+            <span className="text-sm text-red-600">{errors.state.message}</span>
+          )}
+
+          <input
+            type="text"
+            placeholder="City"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("city", {
+              required: "City is required",
+            })}
+          />
+          {errors.city && (
+            <span className="text-sm text-red-600">{errors.city.message}</span>
+          )}
+
+          <input
+            type="text"
+            placeholder="Locality / Area"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("locality", {
+              required: "Locality is required",
+            })}
+          />
+          {errors.locality && (
+            <span className="text-sm text-red-600">
+              {errors.locality.message}
+            </span>
+          )}
+
+          <input
+            type="text"
+            placeholder="Flat / House No / Building"
+            className="outline w-full p-2.5 placeholder:text-sm rounded"
+            {...register("addressLine", {
+              required: "Address is required",
+            })}
+          />
+          {errors.addressLine && (
+            <span className="text-sm text-red-600">
+              {errors.addressLine.message}
+            </span>
+          )}
+          {/* ===================== ADDRESS TYPE ===================== */}
+          <select
+            className="outline w-full p-2.5 text-sm rounded"
+            {...register("addressType", {
+              required: "Select address type",
+            })}
+          >
+            <option value="">Address Type</option>
+            <option value="home">Home</option>
+            <option value="work">Work</option>
+            <option value="work">Office</option>
+          </select>
+          {errors.addressType && (
+            <span className="text-sm text-red-600">
+              {errors.addressType.message}
+            </span>
+          )}
+        </form>
+      </SideDrawer>
     </>
   );
 }

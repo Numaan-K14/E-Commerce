@@ -31,28 +31,28 @@ export function CategoryNavbar({
               <HoverCardContent
                 side="bottom"
                 align="start"
-                className="z-50 max-w-55 bg-white shadow-lg rounded p-3"
+                className="z-50 max-w-60 bg-white shadow-lg rounded"
               >
-                <ul className="space-y-2 text-md uppercase ">
+                <ul className="space-y-2 text-md capitalize">
                   {Array.isArray(menu)
                     ? menu.map((sub) => (
                         <li
                           key={sub}
                           onClick={() => ApiCallHandle(sub)}
-                          className="cursor-pointer text-gray-600 hover:text-black"
+                          className="cursor-pointer text-gray-800 text-sm font-semibold rounded-md hover:text-blue-600 hover:bg-blue-50 transition-all duration-700 ease-out hover:translate-x-0.5 p-1"
                         >
                           {sub}
                         </li>
                       ))
                     : Object.entries(menu).map(([type, list]) => (
                         <li key={type}>
-                          <p className="font-medium capitalize">{type}</p>
+                          <p className="text-md font-bold capitalize">{type}</p>
                           <ul className="ml-3 mt-1 space-y-1 text-gray-600">
                             {list.map((sub) => (
                               <li
                                 key={sub}
                                 onClick={() => ApiCallHandle(sub)}
-                                className="cursor-pointer hover:text-black"
+                                className="cursor-pointer text-gray-800 text-sm font-semibold rounded-md hover:text-blue-600 hover:bg-blue-50 transition-all duration-400 ease-out hover:translate-x-0.5 p-1"
                               >
                                 {sub}
                               </li>

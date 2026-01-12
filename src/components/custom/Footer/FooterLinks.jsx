@@ -1,6 +1,8 @@
 import React from "react";
+// import { useNavigate } from "react-router-dom";
 
 export function FooterLinks({ Heading, Link1, Link2, Link3, Link4, Link5 }) {
+  // const navigate = useNavigate();
   const linksClassName =
     "cursor-pointer hover:text-blue-500 transition-all duration-700";
   return (

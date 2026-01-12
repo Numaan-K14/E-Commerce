@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SideDrawer } from "@/components/custom/SideDrawer";
 import { UserPen } from "lucide-react";
 
 export function LoginPage({ open, setOPen }) {
-  const [profileOpen, setProfileOpen] = useState(false);
+  // const [profileOpen, setProfileOpen] = useState(false);
   const UserDetails = JSON.parse(localStorage.getItem("UserDetails"));
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -17,12 +17,12 @@ export function LoginPage({ open, setOPen }) {
     formState: { errors },
   } = useForm();
 
-  const {
-    register: profileRegister,
-    handleSubmit: profileHandleSubmit,
-    reset: profileReset,
-    formState: { errors: profileErrors },
-  } = useForm();
+  // const {
+  //   register: profileRegister,
+  //   handleSubmit: profileHandleSubmit,
+  //   reset: profileReset,
+  //   formState: { errors: profileErrors },
+  // } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -30,19 +30,20 @@ export function LoginPage({ open, setOPen }) {
     reset();
     localStorage.setItem("UserData", JSON.stringify(data));
     setTimeout(() => {
-      setProfileOpen(true);
+      // setProfileOpen(true);
+      alert("Login Succesfull");
     }, 2000);
   };
 
-  const SideDrawerHandle = (data) => {
-    console.log("UserData", data);
-    localStorage.setItem("UserDetails", JSON.stringify(data));
-    profileReset();
-    setProfileOpen(false);
-    {
-      location.pathname == "/Buy-now" && navigate(0);
-    }
-  };
+  // const SideDrawerHandle = (data) => {
+  //   console.log("UserData", data);
+  //   localStorage.setItem("UserDetails", JSON.stringify(data));
+  //   profileReset();
+  //   setProfileOpen(false);
+  //   {
+  //     location.pathname == "/Buy-now" && navigate(0);
+  //   }
+  // };
 
   return (
     <>
@@ -118,148 +119,149 @@ export function LoginPage({ open, setOPen }) {
           </div>
         </DialogContent>
       </Dialog>
-      <SideDrawer
-        open={profileOpen}
-        OpenHandle={setProfileOpen}
-        HandleSubmit={profileHandleSubmit(SideDrawerHandle)}
-        reset={reset}
-        Action="Save"
-        Heading={
-          !UserDetails && (
-            <div className="flex items-center gap-2">
-              <UserPen />
-              <span>Create Your Profile</span>
-            </div>
-          )
-        }
-        Description={
-          !UserDetails &&
-          "Control your personal details and delivery preferences "
-        }
-      >
-        {!UserDetails && (
-          <form className="grid grid-rows-6 gap-6 p-4">
-            {/* ===================== NAME ===================== */}
-            <input
-              type="text"
-              placeholder="Full Name (for delivery)"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("fullName", {
-                required: "Full name is required",
-              })}
-            />
-            {profileErrors.fullName && (
-              <span className="text-sm text-red-600">
-                {profileErrors.fullName.message}
-              </span>
-            )}
-
-            {/* ===================== CONTACT ===================== */}
-            <input
-              type="tel"
-              placeholder="Mobile Number"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("mobile", {
-                required: "Mobile number is required",
-              })}
-            />
-            {profileErrors.mobile && (
-              <span className="text-sm text-red-600">
-                {profileErrors.mobile.message}
-              </span>
-            )}
-
-            {/* ===================== ADDRESS ===================== */}
-            <input
-              type="text"
-              placeholder="Pincode"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("pincode", {
-                required: "Pincode is required",
-              })}
-            />
-            {profileErrors.pincode && (
-              <span className="text-sm text-red-600">
-                {profileErrors.pincode.message}
-              </span>
-            )}
-
-            <input
-              type="text"
-              placeholder="State"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("state", {
-                required: "State is required",
-              })}
-            />
-            {profileErrors.state && (
-              <span className="text-sm text-red-600">
-                {profileErrors.state.message}
-              </span>
-            )}
-
-            <input
-              type="text"
-              placeholder="City"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("city", {
-                required: "City is required",
-              })}
-            />
-            {profileErrors.city && (
-              <span className="text-sm text-red-600">
-                {profileErrors.city.message}
-              </span>
-            )}
-
-            <input
-              type="text"
-              placeholder="Locality / Area"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("locality", {
-                required: "Locality is required",
-              })}
-            />
-            {profileErrors.locality && (
-              <span className="text-sm text-red-600">
-                {profileErrors.locality.message}
-              </span>
-            )}
-
-            <input
-              type="text"
-              placeholder="Flat / House No / Building"
-              className="outline w-full p-2.5 placeholder:text-sm rounded"
-              {...profileRegister("addressLine", {
-                required: "Address is required",
-              })}
-            />
-            {profileErrors.addressLine && (
-              <span className="text-sm text-red-600">
-                {profileErrors.addressLine.message}
-              </span>
-            )}
-
-            {/* ===================== ADDRESS TYPE ===================== */}
-            <select
-              className="outline w-full p-2.5 text-sm rounded"
-              {...profileRegister("addressType", {
-                required: "Select address type",
-              })}
-            >
-              <option value="">Address Type</option>
-              <option value="home">Home</option>
-              <option value="work">Work</option>
-              <option value="office">Office</option>
-            </select>
-            {profileErrors.addressType && (
-              <span className="text-sm text-red-600">
-                {profileErrors.addressType.message}
-              </span>
-            )}
-          </form>
-        )}
-      </SideDrawer>
     </>
   );
 }
+
+// <SideDrawer
+//   open={profileOpen}
+//   OpenHandle={setProfileOpen}
+//   HandleSubmit={profileHandleSubmit(SideDrawerHandle)}
+//   reset={reset}
+//   Action="Save"
+//   Heading={
+//     !UserDetails && (
+//       <div className="flex items-center gap-2">
+//         <UserPen />
+//         <span>Create Your Profile</span>
+//       </div>
+//     )
+//   }
+//   Description={
+//     !UserDetails &&
+//     "Control your personal details and delivery preferences "
+//   }
+// >
+//   {!UserDetails && (
+//     <form className="grid grid-rows-6 gap-6 p-4">
+//       {/* ===================== NAME ===================== */}
+//       <input
+//         type="text"
+//         placeholder="Full Name (for delivery)"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("fullName", {
+//           required: "Full name is required",
+//         })}
+//       />
+//       {profileErrors.fullName && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.fullName.message}
+//         </span>
+//       )}
+
+//       {/* ===================== CONTACT ===================== */}
+//       <input
+//         type="tel"
+//         placeholder="Mobile Number"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("mobile", {
+//           required: "Mobile number is required",
+//         })}
+//       />
+//       {profileErrors.mobile && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.mobile.message}
+//         </span>
+//       )}
+
+//       {/* ===================== ADDRESS ===================== */}
+//       <input
+//         type="text"
+//         placeholder="Pincode"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("pincode", {
+//           required: "Pincode is required",
+//         })}
+//       />
+//       {profileErrors.pincode && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.pincode.message}
+//         </span>
+//       )}
+
+//       <input
+//         type="text"
+//         placeholder="State"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("state", {
+//           required: "State is required",
+//         })}
+//       />
+//       {profileErrors.state && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.state.message}
+//         </span>
+//       )}
+
+//       <input
+//         type="text"
+//         placeholder="City"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("city", {
+//           required: "City is required",
+//         })}
+//       />
+//       {profileErrors.city && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.city.message}
+//         </span>
+//       )}
+
+//       <input
+//         type="text"
+//         placeholder="Locality / Area"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("locality", {
+//           required: "Locality is required",
+//         })}
+//       />
+//       {profileErrors.locality && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.locality.message}
+//         </span>
+//       )}
+
+//       <input
+//         type="text"
+//         placeholder="Flat / House No / Building"
+//         className="outline w-full p-2.5 placeholder:text-sm rounded"
+//         {...profileRegister("addressLine", {
+//           required: "Address is required",
+//         })}
+//       />
+//       {profileErrors.addressLine && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.addressLine.message}
+//         </span>
+//       )}
+
+//       {/* ===================== ADDRESS TYPE ===================== */}
+//       <select
+//         className="outline w-full p-2.5 text-sm rounded"
+//         {...profileRegister("addressType", {
+//           required: "Select address type",
+//         })}
+//       >
+//         <option value="">Address Type</option>
+//         <option value="home">Home</option>
+//         <option value="work">Work</option>
+//         <option value="office">Office</option>
+//       </select>
+//       {profileErrors.addressType && (
+//         <span className="text-sm text-red-600">
+//           {profileErrors.addressType.message}
+//         </span>
+//       )}
+//     </form>
+//   )}
+// </SideDrawer>

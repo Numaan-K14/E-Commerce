@@ -7,6 +7,7 @@ import { Services } from "./Pages/Services";
 import { PrivacyPolicy } from "./Pages/PrivacyPolicy";
 import { BuyNow } from "./Pages/BuyNow";
 import { Cart } from "./Pages/Cart";
+import { SupportPage } from "./Pages/Support";
 
 function App() {
   let _a;
@@ -32,12 +33,16 @@ function App() {
           element: <PrivacyPolicy />,
         },
         {
+          path: "/Support",
+          element: <SupportPage />,
+        },
+        {
           path: "/Buy-now",
           element: <BuyNow />,
         },
         {
           path: "/Add-to-cart",
-          element: <Cart/>,
+          element: <Cart />,
         },
       ],
     },
