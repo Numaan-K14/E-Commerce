@@ -1,16 +1,51 @@
-# React + Vite
+E-Commerce Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern e-commerce web application built with React and Tailwind CSS featuring secure authentication, reusable components, and dynamic product data via REST APIs.
 
-Currently, two official plugins are available:
+Overview :
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application enables users to browse products, manage sessions securely, and interact with dynamic product data fetched from APIs. It focuses on scalability, clean UI design, and maintainable component architecture.
 
-## React Compiler
+Installation & Setup :
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Follow the steps below to run the project locally:
 
-## Expanding the ESLint configuration
+1️ Install Dependencies :
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2️ Start Development Server :
+npm run dev
+
+3️ Access the Application :
+http://localhost:5173
+
+Key Features :
+
+Modular & Reusable Components :
+Built using reusable React components to ensure scalability and clean code structure.
+
+Secure Authentication & Session Management :
+Implemented user authentication and session persistence using localStorage, enabling protected access and seamless login experience.
+
+REST API Integration :
+Integrated JSON dummy REST APIs to dynamically fetch, display, and manage product data with proper loading states and error handling.
+
+Scalable Project Structure :
+Maintained a well-organized file and folder structure while following clean coding standards.
+
+Responsive & Intuitive UI :
+Designed a modern, responsive interface optimized for usability across devices.
+
+Technology Stack :
+
+Frontend : React.js, JavaScript
+UI & Styling : Tailwind CSS, shadcn/ui, React Icons, Lucide React, HTML, CSS
+API Integration : REST APIs (JSON Dummy APIs)
+Session Management : localStorage
+Version Control : Git & GitHub
+
+Use Cases :
+
+Product browsing & shopping experience.
+Authentication-based user access.
+Frontend architecture and API integration practice.
